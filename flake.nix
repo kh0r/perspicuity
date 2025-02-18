@@ -1,13 +1,19 @@
 {
-  description = "Development environment with python using poetry";
+  description = "Development environment for Perspicuity - An open source Perplexity AI alternative";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs { inherit system; };
         lib = pkgs.lib;
@@ -18,6 +24,9 @@
         devShell = pkgs.mkShell {
           buildInputs = [
             pkgs.git
+            pkgs.nodejs_20
+            pkgs.nodePackages.npm
+            pkgs.ollama
             pythonPackages.python
             pythonPackages.venvShellHook
           ];
@@ -30,9 +39,10 @@
           '';
           postShellHook = ''
             unset SOURCE_DATE_EPOCH
-            export LD_LIBRARY_PATH=${lib.makeLibraryPath [stdenv.cc.cc]}
+            export LD_LIBRARY_PATH=${lib.makeLibraryPath [ stdenv.cc.cc ]}
             poetry env info
           '';
         };
-      });
+      }
+    );
 }

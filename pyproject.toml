@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "perspicuity"
+version = "0.1.0"
+description = "An open source alternative to Perplexity AI"
+authors = ["Your Name <your.email@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.109.2"
+uvicorn = "^0.27.1"
+httpx = "^0.28.1"
+python-dotenv = "^1.0.0"
+duckduckgo-search = "^7.4.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
